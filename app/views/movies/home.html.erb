@@ -1,0 +1,106 @@
+
+<% @alert= [params[:alert]] %>
+<div class="container-fluid">
+  <div class="row">
+   <div class="large-12 columns" style="background:linear-gradient(rgba(0, 0, 0, 0.45),rgba(0, 0, 0, 0.45)),url(/assets/movie.jpg); min-height: 600px; width:100%; background-size:cover;">
+     <%= render "header-content" %>
+     <center style="margin-top: 170px;">
+         <h2 style="color: #fff;text-shadow: 2px 2px 6px #000000;font-size: 57px;">
+           <% if @query_string != nil %>
+           <%= "Results For: " + @query_string.capitalize %>
+           <% else %>
+           <%= "Keyword Search"  %>
+              <% end %>
+         </h2>
+         <form style="width: 40%;" action="/movies">
+           <div style="display: inline-flex;" class="form-group">
+              <input style="margin-right: 6px; width:325px;" type="text" name="keyword" class="form-control" placeholder="Keyword" value="<%= @query_string %>">
+              <button type="submit" class="btn btn-primary">Search</button>
+           </div>
+         </form>
+    </center>
+  </div>
+ </div>
+</div>
+<br/>
+<div class="container">
+  <h2>Popular Movies</h2>
+<% json_object = JSON.parse(@response) %>
+<% json_object ['results'].each do |apimovie|%>
+<% movie_title = apimovie['title'] %>
+<% @movie_title = apimovie['title'] %>
+<% movie_img = apimovie['poster_path'] %>
+<% description = apimovie['overview'] %>
+<% release_date = apimovie['release_date'] %>
+<% @id = apimovie['id'] %>
+<% genre_ids = apimovie['genre_ids'] %>
+<% vote_average = apimovie['vote_average'] %>
+<% vote_average = vote_average / 10 * 5 %>
+<% @backdrop_path = apimovie['backdrop_path'] %>
+
+<span style="visibility: hidden;" class="top_3"><%= current_user.top_movies if current_user %></span>
+<span style="visibility: hidden;" class="movie_id"><%= @id %></span> <span style="visibility: hidden;" class="movie_title"><%= movie_title %></span>
+
+<div class="container" style=" margin-bottom: 20px;">
+   <div class="row" style="background-color:#fff;">
+      <div class="col-sm-3">
+        <%= image_tag("http://image.tmdb.org/t/p/w185#{movie_img}", :alt => "") %>
+      </div>
+      <div style="padding-top: 20px;"class="col-sm-8">
+        <h3><%= movie_title %> (<%= release_date[0..3]  %>) <% vote_average.to_i.times do %>
+          <span style="color: orange;" class="fa fa-star checked"></span>
+        <% end %>
+        <% black_stars = 5 - vote_average.to_i %>
+      <% black_stars.times do %>
+      <span style="" class="fa fa-star checked"></span>
+    <% end %>
+    <% if user_signed_in? %>
+
+    <!-- <span style="background-color: #ff0200; padding: 10px; color: #fff;cursor: pointer; font-size: 15px;position: absolute;top: 0;right: -97px;box-shadow: -1px 2px #888888a6;" onclick="addmovie(<%= @id %>, '<%= @movie_title %>')">Add to Top 3 <i class="fa fa-plus-circle"></i></span> -->
+  <%= link_to '<i class="fa fa-thumbs-up"></i>'.html_safe, addmovie_path(id:@id), method: "POST", class:"addmovie", remote: true, style: 'background-color: #ff0200; padding: 10px; color: #fff;cursor: pointer; font-size: 15px;position: absolute;top: 0;right: -97px;box-shadow: -1px 2px #888888a6;',:onclick => 'addmovie('+ @id.to_s + ',"'+ @movie_title +'")' %>
+
+    <% end %>
+            </h3>
+
+        <div style="margin-top: 5%;margin-bottom: 30px;"><%= description %><%= link_to '...Read More', "movie?id=#{@id}&title=#{movie_title}", options={:style => "color: #ff0200;"} %></div>
+
+
+        <% genre_ids.each do |genre_item| %>
+          <% genre_name = @genre["genres"].select { |x| x["id"] == genre_item }[0]["name"] %>
+            <span style="background-color: red; padding: 10px;color: #fff;border-radius: 9px;"><a style="color:#fff" href="<%= "genre?genre=#{genre_item}" %>"><i class="fa fa-tag"></i> <%= genre_name %></a></span>
+        <% end %>
+
+
+        <!-- Button trigger modal -->
+        <button style="padding: 6px;font-size: 13px;" type="button" class="btn btn-primary col-2" data-toggle="modal" data-target="<%= "#exampleModalCenter#{@id}" %>"><i class="fa fa-star"></i>Write A Review</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id='<%= "exampleModalCenter#{@id}" %>' tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLongTitle"><%= "Review: #{movie_title} (#{release_date[0..3]})" %></h5>
+               <button id="close_button" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+     </div>
+     <div class="modal-body">
+<%= render 'review_form_api' %>
+
+     </div>
+
+   </div>
+ </div>
+</div>
+      </div>
+  </div>
+</div>
+<% end %>
+
+</div>
+<script type="text/javascript">
+function addmovie(id, title){
+  alert(title + " has been added to your favorite movies.");
+}
+</script>
+<%= render "footer" %>

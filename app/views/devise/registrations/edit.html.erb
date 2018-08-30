@@ -1,0 +1,143 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-9">
+      <%= render "header-content" %>
+        <div class="cover-image" style="<%= "background-image: url('#{@user.cover_image}');" %> ">
+          <center style="position: relative;top: 25%;">
+
+
+          <!-- Button trigger modal
+<button type="button" class="uploadnew" data-toggle="modal" data-target="#exampleModalCenter">
+  Edit Profile
+</button>
+
+
+<div class="modal fade covermodal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body coverpop">
+
+
+
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>  -->
+        </center>
+        </div>
+<div class="profile-details">
+  <% if @user.profile_image.present? && @user.profile_image.length < 1 %>
+  <%= image_tag('avatar.jpg', size: "150", class: "profile-img") %>
+  <% else %>
+  <% if @user && @user[:profile_image] %>
+    <%= image_tag(@user[:profile_image], size: "150", class: "profile-img") %>
+  <% end %>
+  <% end %>
+
+  <span class="name"><%= @user.fname %> <%= @user.lname %> | <%= @user.email %></span>
+</div>
+<center>
+<div class="biosection" style="color:#000;"><h3>About</h3>
+<p><%= @user.bio %></p>
+</div>
+
+<hr>
+<h3 style="color:#000">Favorite Movies</h3>
+<div class="movie-info"style="color:#000">
+  <!-- <h3>Top Picks</h3> -->
+    <div style="margin-left: 4%;" class="row">
+<% @user.top_movies.each do |item| %>
+<% @base_url = "https://api.themoviedb.org/3" %>
+<% @key = "2517708c8fb4b77b5994719f8007a06d" %>
+<% @single_movie_id_number = current_user.top_movies[0] %>
+<% endpoint = "movie/#{item}" %>
+<% api_link = "#{@base_url}/#{endpoint}?api_key=#{@key}&language=en-US" %>
+<% @details = HTTP.get(api_link).body %>
+ <% output = JSON.parse(@details) %>
+<% title = output["title"] %>
+<% poster = output["poster_path"] %>
+
+<div class="col-2">
+<%= image_tag("http://image.tmdb.org/t/p/w185#{poster}", :alt => "") %>
+</div>
+<% end %>
+
+    </div>
+</div>
+</center>
+
+
+   </div>
+
+     <div class="col-sm-3 pull-right" style="height: 100vh;background: #383838;padding: 42px;overflow: scroll;">
+
+        <h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%= devise_error_messages! %>
+          <%= hidden_field_tag :id, resource.id %>
+          <div class="field">
+            <%= f.label :"First Name" %><br />
+            <%= f.text_field :fname, autofocus: true, autocomplete: "First Name" %>
+          </div>
+          <div class="field">
+            <%= f.label :"Last Name" %><br />
+            <%= f.text_field :lname, autofocus: true, autocomplete: "Last Name" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :"Bio" %>
+            <%= f.text_area :bio, autofocus: true, autocomplete: "Bio" %>
+          </div>
+          <div class="field">
+            <%= f.label :"Cover Image URL" %>
+            <%= f.text_field :cover_image, autofocus: true, autocomplete: "Cover Image URL" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :"Profile Image URL" %>
+            <%= f.text_field :profile_image, autofocus: true, autocomplete: "Profile Image" %>
+          </div>
+
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <% end %>
+
+          <div class="field">
+            <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+            <%= f.password_field :password, autocomplete: "new-password" %>
+            <% if @minimum_password_length %>
+              <br />
+              <em><%= @minimum_password_length %> characters minimum</em>
+            <% end %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password_confirmation %><br />
+            <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "Update" %>
+          </div>
+        <% end %>
+
+         <!-- link_to "Back", :back -->
+
+    </div>
+  </div>
+</div>

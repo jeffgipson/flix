@@ -1,0 +1,160 @@
+<% json_object = JSON.parse(@videos) %>
+<% json_object ['results'].each do |movievid|%>
+<% key = movievid['key'] %>
+<% @embedlink =  "https://www.youtube.com/embed/#{key}?controls=1&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=#{key}" %>
+<% end %>
+
+<div class="container-fluid topvid">
+ <%= render "header-content" %>
+  <div class="row">
+    <div class="video-background">
+    <div class="video-foreground">
+           <iframe  width="100%" height="500px" style="" src='<%= @embedlink %>'></iframe>
+          </div>
+     </div>
+
+     <div id="vidtop-content">
+     <div class="vid-info">
+       <% output = JSON.parse(@details) %>
+       <% title = output["title"] %>
+       <% description = output["overview"] %>
+       <% tagline = output["tagline"] %>
+       <% release_date = output['release_date'] %>
+       <% @id = output['id'] %>
+       <% genre_ids = output['genre_ids'] %>
+       <% vote_average = output['vote_average'] %>
+       <% vote_average = vote_average / 10 * 5 %>
+     	  <h3><%= title %> (<%= release_date[0..3]  %>) <% vote_average.to_i.times do %>
+          <span style="color: orange;" class="fa fa-star checked"></span>
+        <% end %>
+        <% black_stars = 5 - vote_average.to_i %>
+      <% black_stars.times do %>
+      <span style="" class="fa fa-star checked"></span>
+    <% end %>
+            </h3>
+        <p><%= tagline %></p>
+     	  <p><%= description %></p>
+     	 <!-- <a href="/">Write a Review</a> -->
+       </div>
+     </div>
+
+</div>
+</div>
+<br/>
+
+
+  <div class="container main_content">
+<h1>Top Cast Members</h1>
+<div class="row">
+<% i = -1 %>
+<% json_object = JSON.parse(@cast) %>
+<% json_object ['cast'].each do |castmember|%>
+<% break if i == 8 %>
+<% i = i + 1 %>
+<% cast_id = castmember['cast_id'] %>
+<% character = castmember['character'] %>
+<% name = castmember['name'] %>
+<% actor_id = castmember['id'] %>
+<% headshot = castmember['profile_path'] %>
+<% order = castmember['order'] %>
+
+
+    <div style="background:#fff; text-align:center;border: 3px solid #e0e0e0;padding: 30px;" class="col-sm-4">
+        <h5><%= name %> <br/> <%= character %></h5>
+        <% if headshot == nil  %>
+        <%= image_tag("avatar.jpg", options={:style => "width:100%"}) %>
+        <% else %>
+        <%= image_tag("https://image.tmdb.org/t/p/w200#{headshot}") %>
+        <% end %>
+          </div>
+
+    <% end %>
+    </div>
+</div>
+
+
+<div class="container">
+  <h1>Recent Reviews</h1>
+
+        <% json_object = JSON.parse(@getreviews) %>
+        <% json_object ['results'].each do |reviewitem|%>
+        <div class="row">
+        <% author = reviewitem['author'] %>
+        <% content = reviewitem['content'] %>
+        <% id = reviewitem['id'] %>
+        <% url = reviewitem['url'] %>
+
+        <div style="background:#fff;border: 3px solid #e0e0e0;padding: 30px;" class="col-sm-12">
+          <i class="fa fa-user-circle" style="font-size: 82px;float: left;margin: 0px 13px;"></i> <p><%= content %></p>
+          <h6>Written by - <%= author %></h6>
+        </div>
+        </div>
+        <% end %>
+  </div>
+
+
+    <div class="container">
+    <h1>Similar Movies</h1>
+        <div class="row">
+
+    <div id="demo" class="carousel slide" data-ride="carousel">
+      <!-- Indicators   class="active"-->
+         <ul class="carousel-indicators">
+           <% i = -1  %>
+
+           <% json_object = JSON.parse(@similarvideos) %>
+           <% json_object ['results'].each do |similarvideos|%>
+           <% i = i + 1  %>
+           <% if i == 0 %>
+          <li data-target="#demo" data-slide-to="<%= i %> class="active"></li>
+              <% else %>
+              <li data-target="#demo" data-slide-to="<%= i %>"></li>
+                <% end %>
+
+           <% end %>
+          </ul>
+<div class="carousel-inner">
+      <% i = -1  %>
+      <% json_object = JSON.parse(@similarvideos) %>
+      <% json_object ['results'].each do |similarvideos|%>
+      <% title = similarvideos['title'] %>
+      <% movie_img = similarvideos['poster_path'] %>
+      <% description = similarvideos['overview'] %>
+      <% release_date = similarvideos['release_date'] %>
+      <% @id = similarvideos['id'] %>
+      <% genre_ids = similarvideos['genre_ids'] %>
+      <% vote_average = similarvideos['vote_average'] %>
+      <% bg_img = similarvideos['backdrop_path'] %>
+       <% i = i + 1  %>
+
+      <!-- Wrapper for slides -->
+
+
+       <% if i == 0 %>
+        <div class="carousel-item active">
+          <% else %>
+          <div class="carousel-item">
+            <% end %>
+          <img style="width: 100%;" src="<%= "https://image.tmdb.org/t/p/w1400_and_h450_face#{bg_img}" %>" alt="">
+          <div class="carousel-caption">
+            <h3 style="color: #fff;text-shadow: 2px 2px 6px #000000;font-size: 57px;"><%= title %></h3><br/>
+            <p style="color: #fff;text-shadow: 2px 2px 6px #000000;font-size: 20px;"><%= description %></p><%= link_to 'Read More', "movie?id=#{@id}&title=#{title}", options={:style => style="color: #ff0200;background: white;padding: 6px;border-radius: 4px;"} %>
+          </div>
+        </div>
+
+    <% end %>
+  </div>
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
+</div>
+
+ </div>
+</div>
+<br/>
+  <%= render "footer" %>

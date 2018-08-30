@@ -1,0 +1,19 @@
+<div id="header-items">
+  <h1 style="float:left; width: 50%;font-size: 65px;color: #fff;"><a style="color: #fff;" href="/">FLIX<i class="fa fa-video-camera"></i></a></h1>
+  <div style = "float:left;text-align: right;margin-top:6px;color: #fff;width: 50%;padding-right: 8px;" id="navbar">
+
+<% if user_signed_in? %>
+<h5 style="color#fff;" class="navbar-text pull-right">
+  Logged in as <strong><%= current_user.email %></strong>.
+  <i class="fa fa-cog"></i> <%= link_to 'Settings', edit_user_registration_path, :class => 'navbar-link' %> |
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+</h5>
+<% else %>
+<h3 style="color#fff;" class="navbar-text pull-right">
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+  </h3>
+<% end %>
+
+  </div>
+</div>
