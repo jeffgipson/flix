@@ -68,3 +68,7 @@ gem 'meta_request'
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'carrierwave', '~> 1.0'
+
+group :production do
+  gem 'rails_12factor' 
+end
