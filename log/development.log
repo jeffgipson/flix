@@ -79640,3 +79640,150 @@ Processing by MoviesController#home as HTML
 Completed 200 OK in 878ms (Views: 434.4ms | ActiveRecord: 0.0ms)
 
 
+  [1m[35m (539.4ms)[0m  [1m[35mCREATE DATABASE "db/movieappdb_development" ENCODING = 'utf8'[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (439.5ms)[0m  [1m[35mCREATE DATABASE "db/movieappdb_test" ENCODING = 'utf8'[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (29.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (20.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(2119390561266854505)[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to CreateReviews (20180809063904)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (19.6ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" bigserial primary key, "title" character varying, "review" text, "rating" float, "name" character varying, "username" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20180809063904_create_reviews.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180809063904"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to AddMovieIdToReviews (20180813043221)
+  [1m[35m (5.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (11.9ms)[0m  [1m[35mALTER TABLE "reviews" ADD "movie_id" integer[0m
+  ↳ db/migrate/20180813043221_add_movie_id_to_reviews.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180813043221"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to Rename (20180814001945)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.9ms)[0m  [1m[35mALTER TABLE "reviews" RENAME COLUMN "review" TO "movie_review"[0m
+  ↳ db/migrate/20180814001945_rename.rb:5
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180814001945"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to DeviseCreateUsers (20180820055234)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (13.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20180820055234_devise_create_users.rb:5
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  ↳ db/migrate/20180820055234_devise_create_users.rb:39
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  ↳ db/migrate/20180820055234_devise_create_users.rb:40
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180820055234"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to AddOmniauthToUsers (20180820225605)
+  [1m[35m (5.6ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "provider" character varying[0m
+  ↳ db/migrate/20180820225605_add_omniauth_to_users.rb:3
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "uid" character varying[0m
+  ↳ db/migrate/20180820225605_add_omniauth_to_users.rb:4
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180820225605"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to AddBioToUsers (20180823003723)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "bio" text[0m
+  ↳ db/migrate/20180823003723_add_bio_to_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180823003723"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to AddFnameToUsers (20180823003940)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "fname" character varying[0m
+  ↳ db/migrate/20180823003940_add_fname_to_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180823003940"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (6.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to AddLnameToUsers (20180823003952)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "lname" character varying[0m
+  ↳ db/migrate/20180823003952_add_lname_to_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180823003952"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to AddCoverImageToUsers (20180823004112)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "cover_image" character varying[0m
+  ↳ db/migrate/20180823004112_add_cover_image_to_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180823004112"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to AddProfileImageToUsers (20180823004150)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "users" ADD "profile_image" character varying[0m
+  ↳ db/migrate/20180823004150_add_profile_image_to_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180823004150"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to AddTopMoviesToUsers (20180828011313)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "top_movies" character varying[0m
+  ↳ db/migrate/20180828011313_add_top_movies_to_users.rb:4
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180828011313"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to RemoveTopMoviesFromUsers (20180828011347)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (12.2ms)[0m  [1m[35mALTER TABLE "users" DROP COLUMN "top_movies"[0m
+  ↳ db/migrate/20180828011347_remove_top_movies_from_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180828011347"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+Migrating to AddTopMoviesArrayToUsers (20180828011712)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (24.3ms)[0m  [1m[35mALTER TABLE "users" ADD "top_movies" character varying[] DEFAULT '{}'[0m
+  ↳ db/migrate/20180828011712_add_top_movies_array_to_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20180828011712"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Create (6.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-08-30 03:03:39.832954"], ["updated_at", "2018-08-30 03:03:39.832954"]]
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (6.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(2119390561266854505)[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/jeffgipson/.rvm/gems/ruby-2.4.2/bin/rake:23
