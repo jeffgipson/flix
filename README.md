@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,3 +23,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+=======
+# flix
+Practice rails application using themoviedb API
+>>>>>>> 9a1b123cf1a4dacfd04fbec852d168ed98b501be
